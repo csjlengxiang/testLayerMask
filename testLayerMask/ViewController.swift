@@ -24,7 +24,7 @@ class ViewController: UIViewController {
         
         // 置于底层
         let lb1 = UILabel()
-        lb1.frame = CGRectMake(0, 20, 100, 50)
+        lb1.frame = CGRectMake(0, 0, 100, 50)
         lb1.text = "你好哇"
         lb1.textColor = UIColor.redColor()
         lb1.textAlignment = NSTextAlignment.Center
@@ -32,10 +32,11 @@ class ViewController: UIViewController {
         
         // 覆盖层
         lb = UILabel()
-        lb.frame = CGRectMake(0, 20, 100, 50)
+        lb.frame = CGRectMake(0, 0, 100, 50)
         lb.text = "你好哇"
         lb.textColor = UIColor.blackColor()
         lb.textAlignment = NSTextAlignment.Center
+        //lb.backgroundColor = UIColor.blueColor()
         self.view.addSubview(lb)
         
         // 包裹覆盖层
@@ -47,22 +48,35 @@ class ViewController: UIViewController {
         //        ct.layer.borderColor = UIColor.blueColor().CGColor
         //        self.view.addSubview(ct)
         
-        // 包裹层,置为透明
+        // 包裹层,置为透明,mask为非透明即显现区域
         
-        lb.layer.mask = self.jianbianMask()
+        var ml = self.jianbianMask()
         
+        //lb.layer.insertSublayer(ml, atIndex: 0)
+        lb.layer.mask = ml
+        
+        print(ml.frame)
+        
+        //
+        let ani = CABasicAnimation(keyPath: "position")
+        ani.fromValue = NSValue(CGPoint: CGPoint(x: 25, y: 25))
+        ani.toValue = NSValue(CGPoint: CGPoint(x: 100, y: 25))
+        ani.duration = 4
+        ml.addAnimation(ani, forKey: "ani")
     }
+    
     
     func rectMask() -> CALayer {
         ml = CAShapeLayer()
-        ml.frame = CGRectMake(0, 10, 50, 30)
+        ml.frame = CGRectMake(0, 0, 50, 50)
         ml.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8).CGColor
         return ml
     }
     
     func jianbianMask() -> CALayer {
         let g = CAGradientLayer()
-        g.frame = CGRectMake(0, 10, 50, 30)
+        g.frame = CGRectMake(0, 0, 50, 50)
+        
         let c1 = UIColor(red: 0, green: 0, blue: 0, alpha: 1).CGColor
         let c2 = UIColor(red: 0, green: 0, blue: 0, alpha: 0).CGColor
         
